@@ -76,3 +76,33 @@ longText: |
   earum, pariatur praesentium? Voluptatibus ex recusandae facilis. Eos, veniam
   unde.
 ```
+
+## First workflow
+
+All workflows must be placed inside the directory `.github/workflows` in the root directory. The first key of any workflow is `name`. The value that we pass will become the name of the workflow (GitHub will display this name in the Actions tab).
+
+The second key is `on`. Its value can be a single element or an array. They define the list of events on which the workflow will trigger. These values can be: `workflow_dispatch`, `push`, `pull_request`, etc.
+
+``` yaml
+name: Shell commands
+on: workflow_dispatch
+```
+
+The next key is `jobs`. Under this we can introduce an array of objects, each element of which will represent an task in that job. Each entry needs to be indented with respect of the `jobs` key. The key for each object in the `jobs` array is the name of the job. These can not have any spaces.
+
+The first key of every job is `runs-on`. The value of this key needs to be the operating system in which the job is going to run. We can specify a version of the OS, or just use the key `<os>-latest` to have GitHub use the latest version of the OS.
+
+Next comes the `steps` key, where we can specify the different steps of the job. We can specify a name for each step using the `name` key. After that we use the `run` key to specify what needs to be run on this step.
+
+``` yaml
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: echo "Hello world!"
+      - name: multiline script
+        run: |
+          node -v
+          npm -v
+```
