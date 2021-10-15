@@ -1,2 +1,3 @@
-# udemy_github_actions
-GitHub actions
+# GitHub actions
+
+Ali Alaa's Udemy course on GitHub actions.
