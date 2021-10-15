@@ -1,0 +1,31 @@
+name: Peter
+age: 123
+address: "Peter's street 235 apartment 1:23"
+active: true
+food:
+  favorite: pizza
+  less-favorite: veggies
+  other: { monday: soup, tuesday: ice cream, sundays: bread }
+friends:
+  - Fiona
+  - Roberta
+  - Joe:
+      like: false
+      known-since: 42 years
+cake:
+  - ingredients:
+      - floor: "3 cups"
+        water: "0.5 liters"
+        salt: "just a pinch"
+  - cook:
+      - appliance: oven
+        time: 145 hours
+        temperature: 1000000 degrees
+      - appliance: microwave oven
+        time: 3 minutes
+        temperature: who cares!
+longText: >
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi, vitae!
+  Aspernatur esse ex eaque obcaecati fuga aperiam voluptatem nobis similique
+  earum, pariatur praesentium? Voluptatibus ex recusandae facilis. Eos, veniam
+  unde.
