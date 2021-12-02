@@ -130,7 +130,7 @@ Then add the `ACTIONS_STEP_DEBUG` secret and set it to `true` as well. You can s
 GitHub actions can use different shells: `bash`, `powershell`, `cmd`, etc. To change the shell from the default (`bash` for Linux and MacOS, `powershell` for Windows) to a different one, we need to specify it after the `run`. For example, to run a job in the `python` shell we use:
 
 ``` yaml
-name: Shell commands
+name: CLI commands
 on: workflow_dispatch
 jobs:
   run-shell-command:
@@ -156,7 +156,7 @@ jobs:
 By default, jobs will run in parallel. If we want jobs to run in series we need to specify the `needs` key. This key takes as its value an array of job names. The job will only run once all jobs in the array have finished successfully.
 
 ``` yaml
-name: Shell commands
+name: Job dependencies
 on: workflow_dispatch
 jobs:
   run-shell-command:
@@ -215,4 +215,54 @@ jobs:
           who-to-greet: Daniel
       - name: Log greeting time
         run: echo "${{ steps.greet.outputs.time }}"
+```
+
+## The Checkout Action
+
+When we run a CLI command in our local machine, the command is run on the current directory. When we use workflows, GitHub will set up a directory in which to run them. This directory is `/home/runner/work/repo_name/repo_name`. But, by default, that directory will not contain the files in our directory. The repository is not cloned by default.
+
+We can use an action to clone the repository into the working directory. This special action was created by GitHub and is called `checkout`. This action will authenticate with our repository, and checkout to the commit that triggered the run.
+
+``` yaml
+name: Checkout action
+on: workflow_dispatch
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List files before checkout
+        run: |
+          pwd
+          ls -a
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: List files after checkout
+        run: |
+          pwd
+          ls -a
+```
+
+## Environment variables
+
+Some environment variables are set up automatically by GitHub (in the runner). We can use these variables in our workflows by referencing them with `$VARIABLE_NAME`. Some of them are:
+
+- `$GITHUB_SHA` will return the SHA of the commit that triggered the workflow
+- `$GITHUB_REPOSITORY` will return the `user_name/repo_name` in which the workflow is running
+- `$GITHUB_WORKSPACE` will return the workspace directory in the runner
+
+Similar to the `steps` object, we have an object called `github` that will be automatically set for us and contains more values that we might need. For example, `"${{ github.token }}"` will return a token that we can use to authenticate with the repository.
+
+``` yaml
+name: Environment variables
+on: workflow_dispatch
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print environment variables
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
 ```
