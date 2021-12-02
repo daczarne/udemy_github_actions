@@ -124,3 +124,56 @@ To see more information on the logs, we need to set the `ACTIONS_RUNNER_DEBUG` s
 Then add the `ACTIONS_STEP_DEBUG` secret and set it to `true` as well. You can see all the secrets in the *Secrets* view.
 
 ![list of secrets](img/03_list_of_secrets.png)
+
+## Shells
+
+GitHub actions can use different shells: `bash`, `powershell`, `cmd`, etc. To change the shell from the default (`bash` for Linux and MacOS, `powershell` for Windows) to a different one, we need to specify it after the `run`. For example, to run a job in the `python` shell we use:
+
+``` yaml
+name: Shell commands
+on: workflow_dispatch
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Python Command
+        run: |
+          import platform
+          print(platform.processor())
+        shell: python
+  run-windows-command:
+    runs-on: windows-latest
+    steps:
+      - name: Powershell Command
+        run: Get-Location
+      - name: Cash Command
+        run: pwd
+        shell: bash
+```
+
+## Running job in series
+
+By default, jobs will run in parallel. If we want jobs to run in series we need to specify the `needs` key. This key takes as its value an array of job names. The job will only run once all jobs in the array have finished successfully.
+
+``` yaml
+name: Shell commands
+on: workflow_dispatch
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Python Command
+        run: |
+          import platform
+          print(platform.processor())
+        shell: python
+  run-windows-command:
+    runs-on: windows-latest
+    needs: [run-shell-command]
+    steps:
+      - name: Powershell Command
+        run: Get-Location
+      - name: Cash Command
+        run: pwd
+        shell: bash
+```
