@@ -1,0 +1,11 @@
+name: Shell commands
+on: workflow_dispatch
+jobs:
+  run-windows-command:
+    runs-on: windows-latest
+    steps:
+      - name: Powershell Command
+        run: Get-Location
+      - name: Cash Command
+        run: pwd
+        shell: bash
