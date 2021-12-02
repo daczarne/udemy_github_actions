@@ -1,4 +1,4 @@
-name: Shell commands
+name: Job dependencies
 on: workflow_dispatch
 jobs:
   run-shell-command:
