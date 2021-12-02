@@ -177,3 +177,40 @@ jobs:
         run: pwd
         shell: bash
 ```
+
+## Actions
+
+Actions are written in JavaScript. To use an action we specify it with the `uses` key. Actions can be included in the same repository as the workflow is by passing the path to it as a value, or they can be published in public GitHub repositories. To use an action that has been published in a public GitHub repository the value of the `uses` key needs to be `user_name/repo_name@branch_name`. We can also target a released version with `user_name/repo_name@tag_name`. We can reference a commit with `user_name/repo_name@commit_sha`. The preferred method it to use the tag name, since the tip of a branch might change in the future and introduce breaking changes. If the version references only a mayor, then the latest minor of that mayor will be used. Same logic with patches.
+
+Actions might require/allow inputs. The inputs need to be passed by name (key) as child elements of the `with` key.
+
+``` yaml
+name: Actions workflow
+on: workflow_dispatch
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: JavaScript action
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: Daniel
+```
+
+We can also create actions that capture output. To do so we must `echo` the output of a previous `step`. We access it by referencing it with `"${{ steps.step_id.outputs.output_element }}"`. The `steps` variable is created by GitHub. The step ID we need to define it ourselves in the action that we want to reference. The `outputs` attribute is created by GitHub, and the `output_element` is defined by the creator of the action. Check the action's documentation to find which elements can be output, and their names.
+
+``` yaml
+name: Actions workflow
+on: workflow_dispatch
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: JavaScript action
+        id: greet
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: Daniel
+      - name: Log greeting time
+        run: echo "${{ steps.greet.outputs.time }}"
+```
