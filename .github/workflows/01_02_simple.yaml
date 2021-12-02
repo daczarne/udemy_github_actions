@@ -4,12 +4,6 @@ jobs:
   run-shell-command:
     runs-on: ubuntu-latest
     steps:
-      - name: echo a string
-        run: echo "Hello world!"
-      - name: multiline script
-        run: |
-          node -v
-          npm -v
       - name: python command
         run: |
           import platform
