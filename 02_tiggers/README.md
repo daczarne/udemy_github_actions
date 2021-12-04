@@ -51,3 +51,54 @@ on:
   pull_request:
     types: [assigned, opened, synchronized, reopened]
 ```
+
+## Triggering on external events
+
+To trigger workflows manually we pass the `workflow_dispatch` to the `on` key. We can also trigger workflows on external events. To do so we need to use the `repository_dispatch` value, and specify which activity types
+
+``` yaml
+name: Actions workflow
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [build]
+```
+
+These dispatch requests need to come to the API endpoint `http://api.github/repos/user_name/repo_name/dispatches`. They need to be `POST` requests with the HEADERS `Accept: application/vmd.github.everest-preview+json`, and `Content-Type: application/json`. The body of the request needs to be a JSON object with an `event_type` that matches at least one activity type for that trigger.
+
+``` json
+{
+  "event_type": "build"
+}
+```
+
+Additionally, these requests need to be authenticated. This requires that the request has some authorization header with a valid PAT. The PAT must have a repo scope.
+
+We can also add some `client_payload` for the workflow. This payload could, for example, be inputs needed during the jobs.
+
+``` json
+{
+  "event_type": "build",
+  "client_payload": {
+    "env": "production"
+  }
+}
+```
+
+This payload will be available in the `github` object on the workflow. To access it, we use the `event.client_payload.key` attribute.
+
+``` yaml
+name: Actions workflow
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [build]
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Payload
+        run: echo ${{ github.event.client_payload.env }}
+```
+
+This can be very useful when we want to trigger workflows in one repository, based on workflows from another repository.
