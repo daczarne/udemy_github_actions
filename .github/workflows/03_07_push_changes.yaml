@@ -24,7 +24,7 @@ jobs:
           git branch -m main
           echo "-----------"
           
-          echo "git brach"
+          echo "git branch"
           git branch
           echo "-----------"
           
@@ -73,6 +73,6 @@ jobs:
           git commit -m "Random file"
           echo "-----------"
           
-          echo "git push"
-          git push
+          echo "git push origin main"
+          git push origin main
           echo "-----------"
