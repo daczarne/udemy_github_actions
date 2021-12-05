@@ -116,4 +116,23 @@ jobs:
 
 ![automated issue creation](img/02_automated_issue_creation.png)
 
-Let's look at an example that on push, will create a file with a random number, and push it to the repository.
+## Encrypting and decrypting files
+
+Secrets are useful but they have a limit of 6kbs. Likewise, we might be using some CLI commands in a workflow that uses some secrets that need to be stored in a `json` file. We can push encrypted versions of those files and then include a decryption step in our jobs.
+
+To encrypt the file locally we can use tools like [GPG](https://www.gnupg.org/). To work with them we need to refer to the [encrypted secrets documentation](https://docs.github.com/en/actions/security-guides/encrypted-secrets). The GPG passphrase needs to be added as a repo secret.
+
+``` yaml
+name: Decrypt a file
+on: workflow_dispatch
+jobs:
+  decrypt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Decrypt file
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output $HOME/secret.json secret.json.gpg
+```
