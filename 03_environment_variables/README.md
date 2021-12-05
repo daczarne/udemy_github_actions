@@ -111,3 +111,9 @@ jobs:
             }' \
           --fail
 ```
+
+![automated issue creation](img/01_automated_issue_creation.png)
+
+![automated issue creation](img/02_automated_issue_creation.png)
+
+Let's look at an example that on push, will create a file with a random number, and push it to the repository.
