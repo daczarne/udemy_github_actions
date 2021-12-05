@@ -8,20 +8,71 @@ jobs:
     steps:
       - name: Create a file with a random number
         run: |
+          echo "pwd"
           pwd
+          echo "-----------"
+          
+          echo "ls -a"
           ls -a
+          echo "-----------"
+          
+          echo "git init"
           git init
+          echo "-----------"
+          
+          echo "git branch -m main"
           git branch -m main
+          echo "-----------"
+          
+          echo "git brach"
+          git branch
+          echo "-----------"
+          
+          echo "git remote add origin"
           git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          echo "-----------"
+          
+          echo "git config --global"
           git config --global user.email "actions@github.com"
           git config --global user.name "github-actions"
+          echo "-----------"
+          
+          echo "git fetch"
           git fetch
+          echo "-----------"
+          
+          echo "git checkout main"
           git checkout main
+          echo "-----------"
+          
+          echo "git branch --set-upstream-to=origin/main"
           git branch --set-upstream-to=origin/main
+          echo "-----------"
+          
+          echo "git pull"
           git pull
+          echo "-----------"
+          
+          echo "ls -a"
           ls -a
+          echo "-----------"
+          
+          echo "echo $RANDOM >> random.txt"
           echo $RANDOM >> random.txt
+          echo "-----------"
+          
+          echo "ls -a"
           ls -a
-          git add -A
+          echo "-----------"
+          
+          echo "git add random.txt"
+          git add random.txt
+          echo "-----------"
+          
+          echo "git commit -m 'Random file'"
           git commit -m "Random file"
+          echo "-----------"
+          
+          echo "git push"
           git push
+          echo "-----------"
