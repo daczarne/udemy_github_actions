@@ -67,3 +67,47 @@ jobs:
           echo "WF_ENV: ${JOB_ENV}"
           echo "WF_ENV: ${STEP_ENV}"
 ```
+
+## Encrypting environment variables
+
+Some variables need to be encrypted. To do so, we just need to add the variable value in *Settings > Secrets > Actions > New repository secret*. Give it a name and a value, and save it. These variables will be available in a workflow using an object called `secrets`
+
+``` yaml
+name: Environment Variables (secrets)
+on: workflow_dispatch
+env:
+  SECRET_ENV_VARIABLE: ${{ secrets.SECRET_ENV_VARIABLE }}
+jobs:
+  log-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log ENV variables
+        run: |
+          echo "SECRET_ENV_VARIABLE: ${SECRET_ENV_VARIABLE}"
+```
+
+One secret that is automatically available on workflows is `secrets.GITHUB_TOKEN`. This token can be used to access the GitHub API, or to push something to the repo, etc. Basically, any time that the action needs to do something with the repository it will need authentication.
+
+The following example form the GitHub documentation creates an issue on push events.
+
+``` yaml
+name: Create issue on commit
+on: [push]
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest 
+    permissions:
+      issues: write 
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
+```
