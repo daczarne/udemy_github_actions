@@ -1,0 +1,12 @@
+name: GitHub functions
+on: workflow_dispatch
+jobs:
+  functions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump function outputs
+        run: |
+          echo ${{ contains('hello', 'll') }}
+          echo ${{ startsWith('hello', 'he') }}
+          echo ${{ endsWith('hello', 'lo') }}
+          echo ${{ format('Hello {0}{1}{2}', 'World', '!', '!') }}

@@ -146,8 +146,6 @@ We've been using the `${{ secrets.PASSPHRASE }}`. Whatever we write inside the `
 - strings: `'single quotes'`
 - operators: `==` for comparison, or `<`, `>`, `<=`, `>=`
 
-Lastly, these expressions can be GitHub functions.
-
 Objects that contain some information about the workflow are called **contexts**. For example, the `github` context contains information about the GitHub repository, the `secrets` context contains all repository secrets. You can find all the contexts [here](https://docs.github.com/en/actions/learn-github-actions/contexts).
 
 ``` yaml
@@ -181,4 +179,23 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJSON(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+```
+
+## Functions
+
+Expressions can be GitHub functions. You can find the complete list of available functions [here](https://docs.github.com/en/actions/learn-github-actions/expressions#functions).
+
+``` yaml
+name: GitHub functions
+on: workflow_dispatch
+jobs:
+  functions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump function outputs
+        run: |
+          echo ${{ contains('hello', 'll') }}
+          echo ${{ startsWith('hello', 'he') }}
+          echo ${{ endsWith('hello', 'lo') }}
+          echo ${{ format('Hello {0}{1}{2}', 'World', '!', '!') }}
 ```
