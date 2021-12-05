@@ -10,6 +10,7 @@ jobs:
         run: |
           pwd
           ls -a
+          git config --global init.defaultBranch main
           git init
           git remote add origin "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git config --global user.email "my-bot@bot.com"
@@ -22,5 +23,5 @@ jobs:
           echo $RANDOM >> random.txt
           ls -a
           git add -A
-          git commit -m "Radom file"
+          git commit -m "Random file"
           git push
