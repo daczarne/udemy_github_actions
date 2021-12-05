@@ -24,4 +24,4 @@ jobs:
           ls -a
           git add -A
           git commit -m "Random file"
-          git push
+          git push origin main
