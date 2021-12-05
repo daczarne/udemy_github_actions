@@ -136,3 +136,49 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
         run: gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output $HOME/secret.json secret.json.gpg
 ```
+
+## Expressions and Contexts
+
+We've been using the `${{ secrets.PASSPHRASE }}`. Whatever we write inside the ``${{ }}` is called an **expression**. These expressions can be anything that needs to be evaluated. These expressions can also be literals:
+
+- numbers: `1`, `2`, `3.4`
+- booleans: `true` or `false`
+- strings: `'single quotes'`
+- operators: `==` for comparison, or `<`, `>`, `<=`, `>=`
+
+Lastly, these expressions can be GitHub functions.
+
+Objects that contain some information about the workflow are called **contexts**. For example, the `github` context contains information about the GitHub repository, the `secrets` context contains all repository secrets. You can find all the contexts [here](https://docs.github.com/en/actions/learn-github-actions/contexts).
+
+``` yaml
+name: GitHub contexts
+on: workflow_dispatch
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+```
