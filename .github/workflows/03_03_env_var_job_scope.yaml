@@ -1,0 +1,14 @@
+name: Environment Variables (job scoped)
+on: workflow_dispatch
+env:
+  WF_ENV: Available to all jobs
+jobs:
+  log-env:
+    runs-on: ubuntu-latest
+    env:
+      JOB_ENV: Available to steps in our log-env job
+    steps:
+      - name: Log ENV variables
+        run: |
+          echo "WF_ENV: ${WF_ENV}"
+          echo "WF_ENV: ${JOB_ENV}"
