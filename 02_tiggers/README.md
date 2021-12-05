@@ -102,3 +102,87 @@ jobs:
 ```
 
 This can be very useful when we want to trigger workflows in one repository, based on workflows from another repository.
+
+## Filtering workflow triggers
+
+Workflow triggers can be filtered so that they only run when certain branches, files (paths), tags, etc are affected. To achieve this we need to add more key:value pairs to the `on` key. For example, if we want a workflow to only run when there are pushes to the main branch we use:
+
+``` yaml
+name: Workflow name
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+```
+
+Likewise, of we want a workflow to only trigger when the branch is asking to merge onto the main branch we use:
+
+``` yaml
+name: Workflow name
+on:
+  pull_request:
+    branches:
+      - main
+```
+
+Branches don't necessarily need to be specified by names. They can also be patterns. Patterns of the form `'something/*'` will only match branches that start with `something`, followed by a slash, `/`, followed by some other text, but not by additional slashes. So, for example, the pattern `'feature/*'` will match with branches `'feature/feature-A'` and `'feature/feature-B'`, but not with `'feature/feature-A/task-1'`. To match this branches we need to use `'something/**'`. To summarize, `/*` matches any string except the forward slash, while `/**` matches all strings, including the forward slash.
+
+``` yaml
+name: Workflow name
+on:
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+```
+
+You can find all possible patters [here](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet).
+
+We can also set the trigger to ignore branches by using the `branches-ignore` key.
+
+``` yaml
+name: Workflow name
+on:
+  pull_request:
+    branches-ignore:
+      - main
+```
+
+We cannot have `branches` and `branches-ignore` at the same time. But we can ignore specific branches by adding an exclamation mark in the `branches` key.
+
+``` yaml
+name: Workflow name
+on:
+  pull_request:
+    branches:
+      - main
+      - '!feature/feature-C'
+```
+
+We can also target specific tags in the same way as we do with branches. We can use the `tags` and `tags-ignore` keys to specify tags or patterns of tags to include or ignore, and we can use the exclamation sign to exclude specific tags.
+
+``` yaml
+name: Workflow name
+on:
+  push:
+    tags:
+      - v1
+      - v1.*
+      - '!v2'
+```
+
+Finally, we can filter the triggers by paths (files). For example, if we want our workflow to trigger whenever a JavaScript file is changed we would use:
+
+``` yaml
+name: Workflow name
+on:
+  push:
+    paths:
+      - '**.js'
+      - '!file/path.js'
+```
+
+There's also a `paths-ignore` option. We cannot use both `paths` and `paths-ignore` in the same workflow.
