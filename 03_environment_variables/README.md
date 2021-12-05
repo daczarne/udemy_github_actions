@@ -1,6 +1,6 @@
 # Environment variables
 
-GitHub Actions already come with some built in environment variables, but we can define our own as well. To declare our own variables we need to use the `env` key at the start of our workflow. This key takes as its value a list of key:value pairs, where the keys are the names of the environment variables that we are declaring, and its value is the value of the variable.
+GitHub Actions already come with some built in environment variables. You can read about them [here](https://docs.github.com/en/actions/learn-github-actions/environment-variables). But we can define our own as well. To declare our own variables we need to use the `env` key at the start of our workflow. This key takes as its value a list of key:value pairs, where the keys are the names of the environment variables that we are declaring, and its value is the value of the variable.
 
 ``` yaml
 name: Environment Variables (workflow scope)
