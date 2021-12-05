@@ -199,3 +199,12 @@ jobs:
           echo ${{ endsWith('hello', 'lo') }}
           echo ${{ format('Hello {0}{1}{2}', 'World', '!', '!') }}
 ```
+
+## Job status functions
+
+Job status functions return information on what the status of a job is. These are commonly used with the `if` key. This will cause the step in the job (or a certain step) to only run if a certain expression evaluates to true (like, for example, a previous job being successful). GitHub will take anything in the `if` key as an expression already, so we don't need to use the `${{ }}` syntax.
+
+- The `failure()` function will only return `true` if the previous step has failed
+- The `success()` function returns `true` if the previous step was successful
+- The `cancel()` function returns `true` if the previous step was canceled
+- The `always()` function will always return `true`
