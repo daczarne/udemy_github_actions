@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Log ENV variables
         env:
-          STEP_ENV: Available to only this step
+          STEP_ENV: Available only to this step
         run: |
           echo "WF_ENV: ${WF_ENV}"
           echo "WF_ENV: ${JOB_ENV}"
