@@ -86,3 +86,67 @@ jobs:
       - name: Log node version
         run: node -v
 ```
+
+If we want to exclude a particular combination in our matrix, we can use the `exclude` key to specify an array of values (one per key) to exclude.
+
+``` yaml
+name: Exclude
+on: workflow_dispatch
+jobs:
+  node-version:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6, 8, 10]
+        exclude:
+          - os: ubuntu-latest
+            node_version: 6
+          - os: macos-latest
+            node_version: 8
+      fail-fast: true
+      max-parallel: 3
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Log node version
+        run: node -v
+```
+
+There's also an `include` key, but it's not the opposite of the `exclude` key. This key also takes an array of objects with all the parameters of the matrix, but we use it to specify additional configurations or variables that are needed for that combination only.
+
+``` yaml
+name: Include
+on: workflow_dispatch
+jobs:
+  node-version:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6, 8, 10]
+        include:
+          - os: ubuntu-latest
+            node_version: 8
+            is_ubuntu_8: "true"
+        exclude:
+          - os: ubuntu-latest
+            node_version: 6
+          - os: macos-latest
+            node_version: 8
+      fail-fast: true
+      max-parallel: 3
+    runs-on: ${{ matrix.os }}
+    env:
+      IS_UBUNTU_8: ${{ matrix.is_ubuntu_8 }}
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Log node version
+        run: |
+          node -v
+          echo $IS_UBUNTU_8
+```
