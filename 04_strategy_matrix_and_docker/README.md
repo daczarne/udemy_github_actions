@@ -55,3 +55,34 @@ jobs:
           node -v
           npm -v
 ```
+
+## Strategy
+
+The `strategy` key will allow us to set up an environment matrix. GitHub will then run the job in every possible combination of environments set ups specified on our matrix. To set up a strategy we need to include the `strategy` key in our job. Inside this key we also need to add the `matrix` key. The value of the `matrix` key needs to be an object. The keys of this object can be whatever we like (we'll use them later). This keys basically act as parameters. Each value is an array of the different values that we want to pass to our job for that parameter.
+
+Under the `strategy` key we can also add the `fail-fast` key. By default this key has a value of `true`. This means that under this job, if one step fails, all other steps of the job will be stopped.
+
+We can also add the `max-parallel`. This key takes as its value an integer that specifies how many values of the matrix can run in parallel. By default, GitHub will try to maximize the number of jobs running in parallel.
+
+To reference the values of our `matrix` we need to use an expression that invokes the `matrix` context. Using dot notation, we pass the context and the parameter key that we defined in our matrix. GitHub will run the job once with each possible combination of parameter values.
+
+``` yaml
+name: Strategy
+on: workflow_dispatch
+jobs:
+  node-version:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6, 8, 10]
+      fail-fast: true
+      max-parallel: 3
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Log node version
+        run: node -v
+```

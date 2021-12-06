@@ -1,0 +1,14 @@
+name: Setup node
+on: workflow_dispatch
+jobs:
+  node-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log node version
+        run: node -v
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 6
+      - name: Log node version
+        run: node -v
