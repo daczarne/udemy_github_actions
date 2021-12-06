@@ -1,0 +1,14 @@
+name: Timeout minutes (step)
+on: workflow_dispatch
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        timeout-minutes: 30
+        run: echo "Hello world!"
+        continue-on-error: true
+      - name: multiline script
+        run: |
+          node -v
+          npm -v
