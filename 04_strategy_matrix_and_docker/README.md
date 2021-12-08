@@ -150,3 +150,24 @@ jobs:
           node -v
           echo $IS_UBUNTU_8
 ```
+
+## Docker
+
+We can specify Docker containers for our jobs to run by using the `container` key. To it we pass an object with an `image` key, its value being the image that we will be using. Additionally, we can specify the `env` (for environment variables that need to be available in the container), `ports` (to specify ports to be exposed in the container), `volumes`, `options` (to be used in the Docker create command).
+
+``` yaml
+name: Docker
+on: workflow_dispatch
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: node:13.5.0-alpine3.10
+    steps:
+      - name: Log node version
+        run: |
+          node -v
+          cat /etc/os-release
+```
+
+All steps in the job will run in de container, and not on the virtual machine. We can also specify multiple containers and have different steps run in different containers.
