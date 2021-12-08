@@ -170,4 +170,30 @@ jobs:
           cat /etc/os-release
 ```
 
-All steps in the job will run in de container, and not on the virtual machine. We can also specify multiple containers and have different steps run in different containers.
+All steps in the job will run in de container, and not on the virtual machine.
+
+We can also specify multiple containers. To specify multiple containers we pass an object to the `services` key. Each element of that object is the key that identifies each one of our services. In this example, we have two services: an `app` and a `mongo` DB. In order to communicate between the two containers we can use the service key (name) as a host name.
+
+``` yaml
+name: application
+on: push
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: <name_of_the_image_we_published>
+        ports:
+          - 3001:3000
+      mongo:
+        image: mongo
+        ports:
+          - "27017:27017"
+    steps:
+      - name: POST a user
+        run: "curl -X POST http://mongo:3001/api/user -H 'Content-Type: application/json' -d '{\"username\": \"hello\",\"address\": \"world\"}'"
+      - name: GET users
+        run: curl http://mongo:3001/api/users
+```
+
+Lastly, we can specify different containers for different steps
