@@ -220,3 +220,25 @@ jobs:
           entrypoint: /usr/local/bin/node
           args: -v
 ```
+
+### Creating executable files
+
+We can create our own executable files and run them in actions. This includes passing them as the `ENTRYPOINT` to a Docker file. When using a shell script, be sure to run `chmod +x path/to/file.sh` before committing the changes.
+
+```  yaml
+name: Executable file
+on: workflow_dispatch
+jobs:
+  docker-steps:
+    runs-on: ubuntu-latest
+    container:
+      image: node:10.18.0-jessie
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Executable file
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: ./script.sh
+          args: "Some string"
+```
