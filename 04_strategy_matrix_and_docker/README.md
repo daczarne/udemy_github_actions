@@ -197,3 +197,26 @@ jobs:
 ```
 
 Lastly, we can specify different containers for different steps
+
+``` yaml
+name: Docker
+on: workflow_dispatch
+jobs:
+  docker-steps:
+    runs-on: ubuntu-latest
+    container:
+      image: node:10.18.0-jessie
+    steps:
+      - name: Log node version
+        run: node -v
+      - name: Step with Docker
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: /bin/echo
+          args: Hello, World!
+      - name: Step with Docker
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          entrypoint: /usr/local/bin/node
+          args: -v
+```
