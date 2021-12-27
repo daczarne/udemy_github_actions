@@ -242,3 +242,7 @@ jobs:
           entrypoint: ./script.sh
           args: "Some string"
 ```
+
+### Sending a Slack message
+
+We'll be using the following image from [Docker Hub](https://hub.docker.com/r/technosophos/slack-notify/). This requires creating a Slack application from the `api.slack.com/apps`. Select the *Incoming Webhooks* functionality and turn it on. Next, add a new webhook to workspace. Select a channel. Slack will provide you with the webhook URL. The URL should look something like this: `https://hooks.slack.com/services/alphanumeric-key`. This hook needs to be saved as a secret, since it gives other users the ability to send messages to your Slack account.
