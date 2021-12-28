@@ -77,6 +77,9 @@ try {
   console.log(JSON.stringify(github, null, '\t'));
   core.endGroup();
   
+  /* Set environment variables */
+  core.exportVariable('HELLO', 'hello');
+  
 } catch (error) {
   
   core.setFailed(error.message);
