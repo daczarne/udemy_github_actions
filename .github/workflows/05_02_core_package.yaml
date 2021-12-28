@@ -1,0 +1,11 @@
+name: Core package
+on: workflow_dispatch
+jobs:
+  core-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - uses: ./.github/actions/core_package
+      - run: |
+          echo $HELLO

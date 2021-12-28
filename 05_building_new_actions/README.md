@@ -86,3 +86,36 @@ runs:
   using: 'node12'
   main: 'dist/index.js'
 ```
+
+## The core package
+
+We can use the `debug` method from the `core` package to print messages that will only appear if the DEBUG secret is enabled. Likewise we can use the `warning` and `error` messages.
+
+``` js
+core.debug('Some debugging message.');
+core.warning('Some warning message.');
+core.error('Some error message.');
+```
+
+We can also set secrets.
+
+``` js
+const name = 'Secret to mask in the logs';
+core.setSecret(name);
+```
+
+We can make expandable groups with the `core.startGroup()` and `core.endGroup()` methods.
+
+``` js
+core.startGroup('Logging github object');
+console.log(JSON.stringify(github, null, '\t'));
+core.endGroup();
+```
+
+We can also set environment variables that we can later use in subsequent steps of the workflow.
+
+``` js
+core.exportVariable('HELLO', 'hello');
+```
+
+You can find the core package's documentation [here](https://github.com/actions/toolkit/tree/master/packages/core).
