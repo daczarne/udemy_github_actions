@@ -68,7 +68,7 @@ jobs:
           echo "Time: ${{ steps.hello.outputs.time }}"
 ```
 
-When our actions use external packages we need to compile our code so that the packages are available in the virtual machine. To do this, we can use the `zeit/ncc` package. To install it locally we run `npm i -D @zeit/ncc`. Once installed we can use it by running `npx ncc build path/to/file.js -o path/to/output/dist`. Now we need to change the `main` in our action:
+When our actions use external packages we need to compile our code so that the packages are available in the virtual machine. To do this, we can use the `vercel/ncc` package. To install it locally we run `npm i -D @vercel/ncc`. Once installed we can use it by running `npx ncc build path/to/file.js -o path/to/output/dist`. Now we need to change the `main` in our action:
 
 ``` yaml
 name: Hello World
