@@ -1,0 +1,6 @@
+name: Core toolkit
+author: Mr Smith
+description: More functionalities of the core package.
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
