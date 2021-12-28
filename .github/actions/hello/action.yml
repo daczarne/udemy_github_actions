@@ -1,0 +1,14 @@
+name: Hello World
+author: Mr Smith
+description: An action that greets
+inputs:
+  who-to-greet:
+    description: 'Who to greet'
+    required: true
+    default: 'Mr Smith'
+outputs:
+  time:
+    description: Greeting time
+runs:
+  using: 'node12'
+  main: 'index.js'
