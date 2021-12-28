@@ -14,3 +14,10 @@ jobs:
       - name: Verify action run
         run: |
           echo "Time: ${{ steps.hello.outputs.time }}"
+  test-get-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Console log context
+        uses: ./.github/get_context/hello
