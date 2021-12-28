@@ -1,0 +1,6 @@
+name: Get context data
+author: Mr Smith
+description: An action that prints the context from the github toolkit
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
