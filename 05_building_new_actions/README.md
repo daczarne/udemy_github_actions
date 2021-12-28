@@ -44,3 +44,26 @@ runs:
   using: 'node12'
   main: 'index.js'
 ```
+
+GitHub provides a [toolkit](https://github.com/actions/toolkit) that we can use in actions. This is useful when we need to get user input.
+
+To include this action in a workflow, first we'll need to checkout the repository and then pass the action path to the `uses` keyword.
+
+``` yaml
+name: My JS action
+on: workflow_dispatch
+jobs:
+  test-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Say hello
+        id: hello
+        uses: ./.github/actions/hello
+        with:
+          who-to-greet: 'World'
+      - name: Verify action run
+        run: |
+          echo "Time: ${{ steps.hello.outputs.time }}"
+```
