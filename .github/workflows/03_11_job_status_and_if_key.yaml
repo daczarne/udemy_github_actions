@@ -1,6 +1,6 @@
 name: GitHub functions
-on:
-  workflow_dispatch:
+on: workflow_dispatch
+  # workflow_dispatch:
   # pull_request:
 jobs:
   conditional-job:
