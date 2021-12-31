@@ -1,0 +1,20 @@
+name: Open GitHub issue
+author: Daniel Czarnievicz
+description: Opens a GitHub issue
+inputs:
+  token:
+    description: GitHub token
+    required: true
+  title:
+    description: Title of the issue
+    required: true
+  body:
+    description: Body of the issue
+  assignees:
+    description: Issue assignees
+outputs:
+  issue:
+    description: The issue object as a JSON string
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

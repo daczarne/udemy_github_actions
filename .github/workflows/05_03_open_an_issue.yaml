@@ -1,0 +1,19 @@
+name: Open an issue
+on: workflow_dispatch
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Create the issue
+        id: issue
+        uses: ./.github/actions/open_issue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Title
+          body: Body
+          assignees: 'daczarne'
+      - name: Log the output
+        run: |
+          echo ${{ steps.issue.outputs.issue }}
