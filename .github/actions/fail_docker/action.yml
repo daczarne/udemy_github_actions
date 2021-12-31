@@ -1,0 +1,6 @@
+name: An action that fails (inside a Docker image)
+author: Daniel Czarnievicz
+description: An action that fails
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
