@@ -1,0 +1,6 @@
+name: Core toolkit (inside a Docker image)
+author: Daniel Czarnievicz
+description: More functionalities of the core package.
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

@@ -1,0 +1,13 @@
+name: Docker actions
+on: workflow_dispatch
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Create the issue
+        id: issue
+        uses: ./.github/actions/hello_docker
+        with:
+          who-to-greet: "World!"
