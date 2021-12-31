@@ -146,3 +146,9 @@ runs:
 ```
 
 The Dockerfile needs to be placed inside the action directory. When using Docker actions, we need to define the inputs in the `inputs` object, but also pass them to the `args` array. This way, arguments will be supplied to the entrypoint.
+
+When working with shell scripts, don't forget to make them executables by running:
+
+``` shell
+chmod +x path/to/file.sh
+```
