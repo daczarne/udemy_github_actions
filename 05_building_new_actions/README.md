@@ -152,3 +152,5 @@ When working with shell scripts, don't forget to make them executables by runnin
 ``` shell
 chmod +x path/to/file.sh
 ```
+
+To learn how to set environment variables in Docker containers refer to the documentation [here](https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#setting-an-environment-variable).
