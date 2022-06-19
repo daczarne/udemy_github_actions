@@ -139,7 +139,7 @@ jobs:
 
 ## Expressions and Contexts
 
-We've been using the `${{ secrets.PASSPHRASE }}`. Whatever we write inside the ``${{ }}` is called an **expression**. These expressions can be anything that needs to be evaluated. These expressions can also be literals:
+We've been using the `${{ secrets.PASSPHRASE }}`. Whatever we write inside the `${{ }}` is called an **expression**. These expressions can be anything that needs to be evaluated. These expressions can also be literals:
 
 - numbers: `1`, `2`, `3.4`
 - booleans: `true` or `false`
