@@ -25,7 +25,7 @@ udemy_github_actions
   |_ ...
 ```
 
-Each action requires an `action.yml`file. In this file we'll declare the `name`, `author`, and `description` of the action. Next we can add objects of `inputs` and `outputs`. Each elements of the `inputs` object is itself an object too, with a `description`, `required` flag, and a `default` value. Each element of the `outputs` object takes a description.
+Each action requires an `action.yml` file. In this file we'll declare the `name`, `author`, and `description` of the action. Next we can add objects of `inputs` and `outputs`. Each elements of the `inputs` object is itself an object too, with a `description`, `required` flag, and a `default` value. Each element of the `outputs` object takes a description.
 
 Below that we need to include the `runs` keyword. In it we specify the version of `node` in the `using` keyword, and the location of the file with the action in the `main` keyword.
 
